@@ -1,14 +1,16 @@
-package org.uottawa.eecs.csi5380.sek.shoppingcart;
+package org.uottawa.eecs.csi5380.sek.utils;
 
 import javax.servlet.http.HttpSession;
 
-public class ShoppingCartManager {
+import org.uottawa.eecs.csi5380.sek.shoppingcart.ShoppingCart;
+
+public class ShoppingCartUtil {
 	
 	HttpSession session;
 	ShoppingCart shoppigCart;
 	
 	
-	public ShoppingCartManager(HttpSession session){
+	public ShoppingCartUtil(HttpSession session){
 		this.session = session;
 		this.shoppigCart = (ShoppingCart)session.getAttribute("shoppigCart");
 	}

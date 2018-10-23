@@ -9,12 +9,10 @@ public class ShoppingCart {
 	
 	 List<ShoppingCartItem> listOfitems;
 	    int numberOfItems;
-	    Double totalPrice;
 
 	    public ShoppingCart() {
 	        listOfitems = new ArrayList<ShoppingCartItem>();
 	        numberOfItems = 0;
-	        totalPrice = 0.0;
 	    }
 
 	    public void addItem(Book aBook) {
@@ -61,7 +59,7 @@ public class ShoppingCart {
 	            }
 
 	            if (item != null) {
-	                // remove from cart
+	                // removing from cart
 	                listOfitems.remove(item);
 	                
 	            }
@@ -85,28 +83,22 @@ public class ShoppingCart {
 	        return numberOfItems;
 	    }
 
-	    public Double getSubtotal() {
+	    public Double getTotalPrice() {
 
-	        Double amount = (Double) 0.0;
+	        Double totalPrice = (Double) 0.0;
 
 	        for (ShoppingCartItem sci : listOfitems) {
 	            
 	            Book Book = (Book) sci.getBook();
-	            amount += (sci.getQuantity().doubleValue() * Book.getPrice());
+	            totalPrice += (sci.getQuantity().doubleValue() * Book.getPrice());
 	        }
-
-	        return amount;
-	    }
-
-	    public  Double getTotal() {
 
 	        return totalPrice;
 	    }
-
+	    
 	    public void clear() {
 	        listOfitems.clear();
 	        numberOfItems = 0;
-	        totalPrice =  0.0;
 	    }
 
 

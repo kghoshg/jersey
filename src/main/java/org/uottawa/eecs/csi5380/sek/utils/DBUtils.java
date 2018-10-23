@@ -1,4 +1,4 @@
-package org.uottawa.eecs.csi5380.sek.model;
+package org.uottawa.eecs.csi5380.sek.utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

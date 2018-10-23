@@ -1,5 +1,6 @@
 package org.uottawa.eecs.csi5380.sek.ws.rest;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -7,10 +8,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.uottawa.eecs.csi5380.sek.model.Book;
-import org.uottawa.eecs.csi5380.sek.model.DBUtils;
+import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 
 /**
  * REST API
@@ -34,8 +37,8 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/categories")
 	public List<String> categories() {
-		return dbUtil.createEm().createQuery("SELECT DISTINCT t.category FROM Book t", String.class)
-		  .getResultList();
+		  return dbUtil.createEm().createQuery("SELECT DISTINCT t.category FROM Book t", String.class)
+				  .getResultList();
 	}
 	
 	@GET
@@ -51,4 +54,5 @@ public class ProductCatalogueServices {
 		return dbUtil.createEm().createQuery("SELECT t FROM Book t WHERE t.category = :category", Book.class).setParameter("category", category)
 		  .getResultList();
 	}
+
 }
