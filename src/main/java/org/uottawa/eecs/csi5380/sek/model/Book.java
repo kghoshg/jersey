@@ -57,4 +57,17 @@ public class Book implements Serializable{
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	/////////////////////// Constructors /////////////////////
+	public Book() {
+		
+	}
+	
+	public Book(int id, String title, String author, String category, int price) {
+		this.bookid = id;
+		this.title = title;
+		this.author = author;
+		this.price = price;
+		this.category = category;
+	}
 }

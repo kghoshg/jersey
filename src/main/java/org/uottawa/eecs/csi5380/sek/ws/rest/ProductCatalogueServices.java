@@ -30,9 +30,12 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/books")
 	public List<Book> list() {
-		return dbUtil.createEm().createNamedQuery("Book.findAll", Book.class)
-		  .setMaxResults(50)
-		  .getResultList();
+		List<Book> bookList = 
+		dbUtil.createEm().createNamedQuery("Book.findAll", Book.class)
+		  	  .setMaxResults(50)
+		      .getResultList();
+		dbUtil.createEm().close();
+		return bookList;
 	}
 	
 	/**
@@ -42,8 +45,9 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/categories")
 	public List<String> categories() {
-		  return dbUtil.createEm().createNamedQuery("Book.findAllCategories", String.class)
+		List<String> categories =  dbUtil.createEm().createNamedQuery("Book.findAllCategories", String.class)
 				  .getResultList();
+		return categories;
 	}
 	
 	/**
@@ -54,9 +58,11 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/book/{id}")
 	public List<Book> bookDetailById(@PathParam("id") int id) {
-		return dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+		List<Book> bookList = dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
 		  .setParameter("id", id)
 		  .getResultList();
+		dbUtil.createEm().close();
+		return bookList;
 	}
 	
 	/**
@@ -67,9 +73,11 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/books/{category}")
 	public List<Book> booksByCategory(@PathParam("category") String category) {
-		return dbUtil.createEm().createNamedQuery("Book.findByCategory", Book.class)
+		List<Book> bookList = dbUtil.createEm().createNamedQuery("Book.findByCategory", Book.class)
 		  .setParameter("category", category)
 		  .getResultList();
+		dbUtil.createEm().close();
+		return bookList;
 	}
 
 }

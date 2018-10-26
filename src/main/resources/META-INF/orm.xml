@@ -33,4 +33,5 @@
     <!-- entity mapping -->
     <entity class="Book"/>
     <entity class="User"/>
+    <entity class="Address"/>
 </entity-mappings>
