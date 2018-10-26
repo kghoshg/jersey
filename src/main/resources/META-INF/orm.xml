@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+                                     http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
+	
+	<!-- setting up package location for models -->
+	<package>org.uottawa.eecs.csi5380.sek.model</package>
+	
+    <!-- JPA Named Queries -->
+    <!-- ################  Book   ################ -->
+    <named-query name="Book.findAll">
+        <query>SELECT b FROM Book b</query>
+    </named-query>
+    <named-query name="Book.findById">
+        <query>SELECT b FROM Book b WHERE b.bookid = :id</query>
+    </named-query>
+    <named-query name="Book.findAllCategories">
+        <query>SELECT DISTINCT b.category FROM Book b</query>
+    </named-query>
+	<named-query name="Book.findByCategory">
+        <query>SELECT b FROM Book b WHERE b.category = :category</query>
+    </named-query>
+    
+    <!-- ################  User   ################ -->
+    <named-query name="User.findByUserNamePassword">
+        <query>SELECT u FROM User u WHERE u.userName = :user_name AND u.password = :password</query>
+    </named-query>
+    <named-query name="User.findByUserName">
+        <query>SELECT u FROM User u WHERE u.userName = :user_name</query>
+    </named-query>
+    
+    <!-- entity mapping -->
+    <entity class="Book"/>
+    <entity class="User"/>
+</entity-mappings>

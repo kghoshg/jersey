@@ -7,9 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * It is Book model class
+ * @author Kuntal Ghosh
+ *
+ */
 @Entity
 @Table(name = "book")
 public class Book implements Serializable{
+	
+	////////////////////attributes of Book model class//////////////
 	@Id
 	@Column(name = "bookid", unique = true, columnDefinition = "VARCHAR" )
 	private int bookid; 
@@ -19,6 +26,7 @@ public class Book implements Serializable{
 	@Column(name = "category",columnDefinition="ENUM('Biography and Memoir','Business and Finance','Computers', 'Entertainment', 'History', 'Fiction', 'Science Fiction', 'Self-Help', 'Health', 'Science and Nature', 'Poetry')")
 	private String category;
 	
+	///////////////////////getters and setters/////////////////////
 	public int getBookid() {
 		return bookid;
 	}

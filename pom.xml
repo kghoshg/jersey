@@ -11,13 +11,6 @@
 	<name>bookstore</name>
 	<url>https://github.com/kghoshg/jersey</url>
 
-	<repositories>
-		<repository>
-			<id>JBoss repository</id>
-			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<!-- JAX-RS / Jersey -->
 		<dependency>
@@ -59,10 +52,25 @@
 			<version>5.3.6.Final</version>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+			<version>5.3.6.Final</version>
+		</dependency>
+		
+		<!-- Hibernate c3p0 connection pool -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>5.3.6.Final</version>
+		</dependency>
+		
+		<!-- MySQL -->
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.12</version>
 		</dependency>
+		
 		<!-- Java CDI -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -70,6 +78,7 @@
 			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<!-- Java servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -112,6 +121,8 @@
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
+			
+			<!-- Tomcat plugin with SSL configuration -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>

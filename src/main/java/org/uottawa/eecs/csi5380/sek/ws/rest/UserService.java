@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -17,11 +18,18 @@ import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.exception.ConstraintViolationException;
 import org.uottawa.eecs.csi5380.sek.model.User;
 import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 
+/**
+ * RESTful User service
+ * @author Kuntal Ghosh
+ *
+ */
 @Path("/user_service")
 @Produces(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_JSON)
 public class UserService {
 
 	private DBUtils dbUtil;
@@ -31,33 +39,51 @@ public class UserService {
 		this.dbUtil = new DBUtils();
 		this.session = request.getSession(true);
 	}
-
+	
+	/**
+	 * It signs in a user
+	 * @param user_name
+	 * @param password
+	 * @return a Response object
+	 * @throws JSONException
+	 */
 	@POST
 	@Path("/signin")
 	public Response signIn(@FormParam("user_name") String user_name, @FormParam("password") String password)
 			throws JSONException {
-		List<User> user = dbUtil.createEm()
-				.createQuery("SELECT t FROM User t WHERE t.userName = :user_name AND t.password = :password",
-						User.class)
-				.setParameter("user_name", user_name).setParameter("password", password).getResultList();
+		List<User> user = dbUtil.createEm().createNamedQuery("User.findByUserNamePassword", User.class)
+				.setParameter("user_name", user_name)
+				.setParameter("password", password)
+				.getResultList();
 		if (!user.isEmpty()) {
 			session.setAttribute("signedInUser", user.get(0));
-			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Successful")).build();
+			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Sign in Successful")).build();
 		} else {
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Sign in unsuccessful")).build();
 		}
 	}
-
+	
+	/**
+	 * It creates a user account
+	 * @param user_name
+	 * @param email
+	 * @param password
+	 * @param first_name
+	 * @param last_name
+	 * @return a Response object
+	 * @throws JSONException
+	 */
 	@POST
 	@Path("/create_account")
 	public Response createAccount(@FormParam("user_name") String user_name, @FormParam("email") String email,
 			@FormParam("password") String password, @FormParam("first_name") String first_name,
 			@FormParam("last_name") String last_name) throws JSONException {
 
-		List<User> user = dbUtil.createEm()
-				.createQuery("SELECT t FROM User t WHERE t.userName = :user_name", User.class)
+		List<User> user = dbUtil.createEm().createNamedQuery("User.findByUserName", User.class)
 				.setParameter("user_name", user_name)
 				.getResultList();
+		
+		//checks if the username already exists
 		if (!user.isEmpty()) {
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "username has already been taken"))
 					.build();
@@ -73,20 +99,32 @@ public class UserService {
 				dbUtil.createEm().persist(aUser);
 				dbUtil.createEm().getTransaction().commit();
 				dbUtil.createEm().close();
+				//makes the newly created user automatically signed in
+				session.setAttribute("signedInUser", aUser);
 			} catch (Exception e) {
-				System.out.println("*************************************" + e);
+				return Response.status(Status.OK).entity(new JSONObject().put("msg", e.getMessage()))
+						.build();
 			}
 			return Response.status(Status.CREATED)
 					.entity(new JSONObject().put("msg", "account successfully created!")).build();
 		}
 	}
-
+	
+	/**
+	 * It checks if a user is signed in or not
+	 * @return true or false
+	 */
 	@GET
 	@Path("/is_signed_in")
 	public boolean isSignedIn() {
 		return session.getAttribute("signedInUser") != null;
 	}
-
+	
+	/**
+	 * It signs a user out
+	 * @return a Response object
+	 * @throws JSONException
+	 */
 	@GET
 	@Path("/signout")
 	public Response signOut() throws JSONException {

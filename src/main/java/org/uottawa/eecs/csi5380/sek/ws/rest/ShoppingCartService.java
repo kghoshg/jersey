@@ -20,6 +20,12 @@ import org.uottawa.eecs.csi5380.sek.shoppingcart.ShoppingCartItem;
 import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 import org.uottawa.eecs.csi5380.sek.utils.ShoppingCartUtil;
 
+/**
+ * RESTful shopping cart service 
+ * @author Kuntal Ghosh
+ *
+ */
+
 @Path("/shopping_cart_service")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -33,6 +39,10 @@ public class ShoppingCartService {
 		this.aShoppingCart = new ShoppingCartUtil(request.getSession(true)).getShoppingCart();
 	}
 	
+	/**
+	 * It prepares a shopping cart based on user session
+	 * @return the shopping cart as JSON object
+	 */
 	@GET
 	@Path("/show_cart")
 	public JSONObject showCart() {
@@ -60,31 +70,58 @@ public class ShoppingCartService {
 		 return shoppingCart;
 	}
 	
-	 
+	/**
+	 * It adds a book to the current shopping cart 
+	 * @param book id
+	 * @return a Response object
+	 */
 	@POST
 	@Path("/add_2_cart/{id}")
 	public Response.Status add2Cart(@PathParam("id") int id) {
-		aShoppingCart.addItem(dbUtil.createEm().createQuery("SELECT t FROM Book t WHERE t.bookid = :bookid", Book.class).
-				setParameter("bookid", id).getResultList().get(0));
+		aShoppingCart.addItem(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+				  .setParameter("id", id)
+				  .getResultList()
+				  .get(0));
 		return Response.Status.OK;
 	}
 	
+	/**
+	 * It removes a book from the current shopping cart
+	 * @param book id
+	 * @return
+	 */
 	@POST
 	@Path("/remove_from_cart/{id}")
 	public Response.Status removeFromCart(@PathParam("id") int id) {
-		aShoppingCart.update( dbUtil.createEm().createQuery("SELECT t FROM Book t WHERE t.bookid = :bookid", Book.class).
-				setParameter("bookid", id).getResultList().get(0), 0);
+		aShoppingCart.update(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+				  .setParameter("id", id)
+				  .getResultList()
+				  .get(0), 0);
 		return Response.Status.OK;
 	}
 	
+	/**
+	 * It updates the number of copies of the same book
+	 * @param book id
+	 * @param quantity, the number of copies of a book
+	 * @return a Response object
+	 */
 	@POST
 	@Path("/update_cart/{id}/{quantity}")
 	public Response.Status updateCart(@PathParam("id") int id, @PathParam("quantity") int quantity) {
-		aShoppingCart.update( dbUtil.createEm().createQuery("SELECT t FROM Book t WHERE t.bookid = :bookid", Book.class).
-				setParameter("bookid", id).getResultList().get(0), quantity);
+		aShoppingCart.update(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+				  .setParameter("id", id)
+				  .getResultList()
+				  .get(0), quantity);
 		return Response.Status.OK;
 	}
 	
+	/**
+	 * It checks if a book is in the current shopping cart or not
+	 * @param book id
+	 * @return a Response object
+	 * @throws JSONException
+	 */
 	@POST
 	@Path("/is_in_cart/{id}")
 	public JSONObject isInTheCart(@PathParam("id") int id) throws JSONException{
@@ -98,10 +135,15 @@ public class ShoppingCartService {
 		return  new JSONObject().put("is_present", isPresent);
 	}
 	
+	/**
+	 * It empties the current shopping cart
+	 * @return a Response Status
+	 */
 	@GET
 	@Path("/empty_cart")
-	public void emptyCart() {
+	public Response.Status emptyCart() {
 		aShoppingCart.clear();
+		return Response.Status.OK;
 	}
 	
 }
