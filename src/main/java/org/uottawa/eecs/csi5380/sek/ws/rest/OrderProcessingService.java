@@ -52,14 +52,20 @@ public class OrderProcessingService {
 	 * @param password
 	 * @return a Response object
 	 * @throws JSONException
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@POST
 	@Path("/signin")
-	public Response signIn(@FormParam("user_name") String user_name, @FormParam("password") String password)
-			throws JSONException {
+	public Response signIn(String form_data)
+			throws JSONException, JsonParseException, JsonMappingException, IOException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		User formData = objectMapper.readValue(form_data, new TypeReference<User>(){});
 		List<User> user = dbUtil.createEm().createNamedQuery("User.findByUserNamePassword", User.class)
-				.setParameter("user_name", user_name)
-				.setParameter("password", password)
+				.setParameter("user_name", formData.getUserName())
+				.setParameter("password", formData.getPassword())
 				.getResultList();
 		if (!user.isEmpty()) {
 			session.setAttribute("signedInUser", user.get(0));
