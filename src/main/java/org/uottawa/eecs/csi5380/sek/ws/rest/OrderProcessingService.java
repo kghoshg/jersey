@@ -133,9 +133,11 @@ public class OrderProcessingService {
 		
 		if(!Long.toString(VALID_CREDIT_CARD).equals(credit_card)){
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction unsuccessful!")).build();
+		}else if (numberOfProcessing == 5) {
+			return Response.status(Status.OK).entity(new JSONObject().put("msg", "It is the 5th transaction, so cancelled!")).build();
+		}else {
+			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction successful!")).build();
 		}
-		
-		return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction successful!")).build();
 	}
 	
 	/**
