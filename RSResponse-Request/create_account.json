@@ -1,0 +1,21 @@
+{
+ "userName":"Eric",
+ "password":"12345",
+ "first_name":"Eric",
+ "last_name":"Spero",
+ "address":[
+  {
+    "street":"Bronson",
+    "province":"On",
+    "city":"Ottawa",
+    "country":"Canada",
+    "zip":"12781k"
+  },
+  {
+  	"street":"King",
+    "province":"On",
+    "city":"Ottawa",
+    "country":"Canada",
+    "zip":"1rc781"
+  }]
+}
