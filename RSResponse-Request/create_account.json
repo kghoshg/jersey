@@ -1,21 +1,23 @@
 {
- "userName":"Eric",
+ "userName":"kghosh",
  "password":"12345",
- "first_name":"Eric",
- "last_name":"Spero",
+ "firstName":"Kay",
+ "lastName":"Ghosh",
  "address":[
   {
     "street":"Bronson",
     "province":"On",
-    "city":"Ottawa",
+    "phone":"1234561212",
     "country":"Canada",
-    "zip":"12781k"
+    "zip":"12781k",
+    "type":"shipping"
   },
   {
   	"street":"King",
     "province":"On",
-    "city":"Ottawa",
+    "phone":"9876540000",
     "country":"Canada",
-    "zip":"1rc781"
+    "zip":"1rc781",
+    "type":"billing"
   }]
 }
