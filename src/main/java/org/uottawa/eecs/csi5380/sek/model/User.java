@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -52,6 +53,7 @@ public class User {
     		mappedBy="user",
             cascade = CascadeType.ALL, 
             orphanRemoval = true)
+    @JsonManagedReference
     private List<Address> address = new ArrayList<>();
     
     //////////////////getters and setters////////////////////

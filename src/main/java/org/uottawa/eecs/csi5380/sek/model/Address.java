@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -28,33 +29,34 @@ public class Address {
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	int id;
+	private int id;
 	@NotNull
 	@Size(min = 2, message = "at least 2 characters long")
 	@Column(name = "street", columnDefinition = "VARCHAR")
-	String street;
+	private String street;
 	@NotNull
 	@Size(min = 2, message = "at least 2 characters long")
 	@Column(name = "province", columnDefinition = "VARCHAR")
-	String province;
+	private String province;
 	@NotNull
 	@Size(min = 2, message = "at least 2 characters long")
 	@Column(name = "country", columnDefinition = "VARCHAR")
-	String country;
+	private String country;
 	@NotNull
 	@Size(min = 6, message = "at least 6 characters long")
 	@Column(name = "zip", columnDefinition = "VARCHAR")
-	String zip;
+	private String zip;
 	@NotNull
 	@Size(min = 10, message = "at least 10 characters long")
 	@Column(name = "phone", columnDefinition = "VARCHAR")
-	String phone;
+	private String phone;
 	
 	@Column(name = "type", columnDefinition="ENUM('billing','shipping')")
 	private String type;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@JsonBackReference
 	private User user;
 
 	/////////////////////// getters and setters/////////////////////

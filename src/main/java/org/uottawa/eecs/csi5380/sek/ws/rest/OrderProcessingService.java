@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -67,7 +68,9 @@ public class OrderProcessingService {
 				.getResultList();
 		if (!user.isEmpty()) {
 			session.setAttribute("signedInUser", user.get(0));
-			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Sign in Successful")).build();
+			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Sign in Successful")
+					.put("user_id", user.get(0).getId()))
+					.build();
 		} else {
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Sign in unsuccessful")).build();
 		}
@@ -147,6 +150,17 @@ public class OrderProcessingService {
 		}else {
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction successful!")).build();
 		}
+	}
+	
+	/**It finds the deatils of a user by his/her id
+	 */
+	@POST
+	@Path("/user_detail/{user_id}")
+	public List<User> userDetailById(@PathParam("user_id") int user_id) {
+		List<User> user = dbUtil.createEm().createNamedQuery("User.findById", User.class)
+				.setParameter("user_id", user_id)
+				.getResultList();
+		return user;
 	}
 	
 	/**

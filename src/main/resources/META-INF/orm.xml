@@ -29,6 +29,9 @@
     <named-query name="User.findByUserName">
         <query>SELECT u FROM User u WHERE u.userName = :user_name</query>
     </named-query>
+     <named-query name="User.findById">
+        <query>SELECT u FROM User u WHERE u.id = :user_id</query>
+    </named-query>
     
     <!-- entity mapping -->
     <entity class="Book"/>
