@@ -6,12 +6,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,7 +37,6 @@ public class OrderProcessingService {
 	
 	private DBUtils dbUtil;
 	HttpSession session;
-	private int numberOfProcessing = 0;
 	private final long VALID_CREDIT_CARD = 1234567890123456L;
 
 	public OrderProcessingService(@Context HttpServletRequest request) {
@@ -130,16 +128,21 @@ public class OrderProcessingService {
 	 * It processes the credit card transaction
 	 * @throws JSONException 
 	 */
-	@PUT
+	@POST
 	@Path("/process_card")
-	public Response processCard(@FormParam("credit_card") String credit_card) throws JSONException {
-		
+	public Response processCard(@QueryParam("credit_card") String credit_card) throws JSONException {
+
 		//increases the counter by 1 every time a credit card transaction is processed
-		numberOfProcessing++;
+		if(session.getAttribute("numberOfProcessing") != null) {
+			session.setAttribute("numberOfProcessing", Integer.parseInt(session.getAttribute("numberOfProcessing").toString()) + 1);
+		}else {
+			session.setAttribute("numberOfProcessing", 1);
+		}
 		
-		if(!Long.toString(VALID_CREDIT_CARD).equals(credit_card)){
+		if(!Long.toString(VALID_CREDIT_CARD).equals(credit_card) && session.getAttribute("numberOfProcessing").toString() != "5"){
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction unsuccessful!")).build();
-		}else if (numberOfProcessing == 5) {
+		}else if (session.getAttribute("numberOfProcessing").toString() == "5") {
+			session.setAttribute("numberOfProcessing", 0);
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "It is the 5th transaction, so cancelled!")).build();
 		}else {
 			return Response.status(Status.OK).entity(new JSONObject().put("msg", "Credit card transaction successful!")).build();

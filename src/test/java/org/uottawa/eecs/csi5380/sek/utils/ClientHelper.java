@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////////////////
+/////                                                                 /////
+/////       Credit: https://gist.github.com/outbounder/1069465        /////
+/////                                                                 /////
+///////////////////////////////////////////////////////////////////////////
+
 package org.uottawa.eecs.csi5380.sek.utils;
 
 import java.security.SecureRandom;
@@ -16,11 +22,6 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.urlconnection.HTTPSProperties;
 
-///////////////////////////////////////////////////////////////////////////
-/////                                                                 /////
-/////       Credit: https://gist.github.com/outbounder/1069465        /////
-/////                                                                 /////
-///////////////////////////////////////////////////////////////////////////
 
 public class ClientHelper {
 	

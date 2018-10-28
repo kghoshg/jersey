@@ -19,15 +19,23 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
+/**
+ * This class to test all the RESTFul APIs for Product Catalogue Services
+ * @author Kuntal Ghosh
+ *
+ */
+
 public class ProductCatalogueServicesTest {
 	
 	private static Client aJerseyClient;
 	
+	//setting up
 	@BeforeClass
 	public static void setUp() {
 		aJerseyClient  = ClientHelper.createClient();
 	}
 	
+	// It tests the product catalogue service for list of all books in the store
 	@Test
 	public void testAllBooks() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, ClientHandlerException, UniformInterfaceException, IOException {
 		
@@ -42,6 +50,7 @@ public class ProductCatalogueServicesTest {
 				assertTrue("total number of books in DB:", bookList.size() >= 6);
 	}
 	
+	//It tests the product catalogue service for list of distinct book categories in the store
 	@Test
 	public void testAllCategories() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, ClientHandlerException, UniformInterfaceException, IOException {
 		WebResource webResource = aJerseyClient
@@ -55,6 +64,7 @@ public class ProductCatalogueServicesTest {
 				assertTrue("total number of distinct categories in book table:", categories.size() >= 4);
 	}
 	
+	//It tests the product catalogue service for finding a book by its id in the store
 	@Test
 	public void testFindBookById() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, ClientHandlerException, UniformInterfaceException, IOException {
 		WebResource webResource = aJerseyClient
@@ -68,6 +78,7 @@ public class ProductCatalogueServicesTest {
 				assertTrue("total number of distinct categories in book table:", bookList.size() == 1);
 	}
 	
+	//It tests the product catalogue service for finding a book by category in the store
 	@Test
 	public void testFindBookByCategory() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, ClientHandlerException, UniformInterfaceException, IOException {
 		WebResource webResource = aJerseyClient
