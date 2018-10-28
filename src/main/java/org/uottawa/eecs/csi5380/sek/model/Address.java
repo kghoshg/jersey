@@ -13,6 +13,11 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * It is Address model class
+ * @author Kuntal Ghosh
+ *
+ */
 @Entity
 @Table(name = "address")
 public class Address {

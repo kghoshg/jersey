@@ -21,7 +21,7 @@ import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 import org.uottawa.eecs.csi5380.sek.utils.ShoppingCartUtil;
 
 /**
- * RESTful shopping cart service 
+ * RESTful for shopping cart service 
  * @author Kuntal Ghosh
  *
  */

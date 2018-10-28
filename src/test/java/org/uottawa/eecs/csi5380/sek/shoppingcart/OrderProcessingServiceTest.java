@@ -19,15 +19,22 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
+/**
+ * This class to test all the RESTFul APIs for Order Processing Services
+ * @author Kuntal Ghosh
+ *
+ */
 public class OrderProcessingServiceTest {
 	
 	private static Client aJerseyClient;
 	
+	//setting up test
 	@BeforeClass
 	public static void setUp() {
 		aJerseyClient  = ClientHelper.createClient();
 	}
 	
+	//It tests user sigin in
 	@Test
 	public void testUserSignIn() throws JsonParseException, JsonMappingException, ClientHandlerException, UniformInterfaceException, IOException {
 		WebResource webResource = aJerseyClient
@@ -46,6 +53,7 @@ public class OrderProcessingServiceTest {
 		assertTrue("User successfully signed in!", msg.equalsIgnoreCase("Sign in Successful"));
 	}
 	
+	//It tests invalid credit card transaction
 	@Test
 	public void testProcessCard() throws JsonProcessingException, ClientHandlerException, UniformInterfaceException, IOException {
 		

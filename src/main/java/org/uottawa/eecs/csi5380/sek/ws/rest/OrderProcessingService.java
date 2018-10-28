@@ -27,7 +27,7 @@ import org.uottawa.eecs.csi5380.sek.model.User;
 import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 
 /**
- * REST API
+ * REST API for Order Processing Service
  */
 
 @Path("/order_processor")
