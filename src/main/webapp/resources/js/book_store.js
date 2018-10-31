@@ -394,6 +394,8 @@ function signin(userjson){
 	    console.log(userjson.userName);
 	    $("#login-window").modal('hide'); //get rid of modal pop-up
 	    $("#logged-in-user").html(currentusername); //append logged in user name to div
+	    switchtoAccountOrder();
+	    
 	    
 	},
 	error: function(error){
