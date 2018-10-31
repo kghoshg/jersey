@@ -1,4 +1,4 @@
-package org.uottawa.eecs.csi5380.sek.shoppingcart;
+package org.uottawa.eecs.csi5380.sek.webservices.rest;
 
 import static org.junit.Assert.assertTrue;
 
