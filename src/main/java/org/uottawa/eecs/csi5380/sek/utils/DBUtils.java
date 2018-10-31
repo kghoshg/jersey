@@ -12,16 +12,17 @@ import javax.persistence.PersistenceContext;
  */
 public class DBUtils {
 	@PersistenceContext
-	EntityManager em;
+	private static EntityManager em;
 
 	/**
 	 * It is creates an @see EntityManager
 	 * @return an object of @see EntityManager
 	 */
-	public EntityManager createEm() {
+	public static EntityManager getEntityManager() {
 		if (em == null) {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("SEK-CSI5380");
 			em = emf.createEntityManager();
+			em.getTransaction().begin();
 		}
 		return em;
 	}

@@ -1,5 +1,6 @@
 package org.uottawa.eecs.csi5380.sek.ws.rest;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -31,11 +32,10 @@ import org.uottawa.eecs.csi5380.sek.utils.ShoppingCartUtil;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ShoppingCartService {
 	
-	private DBUtils dbUtil;
 	private ShoppingCart aShoppingCart;
+	private static EntityManager em = DBUtils.getEntityManager();
 	
 	public ShoppingCartService(@Context HttpServletRequest request) {
-		this.dbUtil = new DBUtils();
 		this.aShoppingCart = new ShoppingCartUtil(request.getSession(true)).getShoppingCart();
 	}
 	
@@ -78,7 +78,8 @@ public class ShoppingCartService {
 	@POST
 	@Path("/add_2_cart/{id}")
 	public Response.Status add2Cart(@PathParam("id") int id) {
-		aShoppingCart.addItem(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+		
+		aShoppingCart.addItem(em.createNamedQuery("Book.findById", Book.class)
 				  .setParameter("id", id)
 				  .getResultList()
 				  .get(0));
@@ -93,7 +94,8 @@ public class ShoppingCartService {
 	@POST
 	@Path("/remove_from_cart/{id}")
 	public Response.Status removeFromCart(@PathParam("id") int id) {
-		aShoppingCart.update(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+		
+		aShoppingCart.update(em.createNamedQuery("Book.findById", Book.class)
 				  .setParameter("id", id)
 				  .getResultList()
 				  .get(0), 0);
@@ -109,7 +111,8 @@ public class ShoppingCartService {
 	@POST
 	@Path("/update_cart/{id}/{quantity}")
 	public Response.Status updateCart(@PathParam("id") int id, @PathParam("quantity") int quantity) {
-		aShoppingCart.update(dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+		
+		aShoppingCart.update(em.createNamedQuery("Book.findById", Book.class)
 				  .setParameter("id", id)
 				  .getResultList()
 				  .get(0), quantity);

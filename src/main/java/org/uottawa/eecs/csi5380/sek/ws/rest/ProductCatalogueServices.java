@@ -2,6 +2,7 @@ package org.uottawa.eecs.csi5380.sek.ws.rest;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +22,11 @@ import org.uottawa.eecs.csi5380.sek.utils.DBUtils;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductCatalogueServices {
 	
-	private DBUtils dbUtil = new DBUtils();
+	private static EntityManager em = DBUtils.getEntityManager();
+	
+//	public ProductCatalogueServices() {
+//		em.getTransaction().begin();
+//	}
 	
 	/**
 	 * It lists all the books in the store
@@ -30,11 +35,11 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/books")
 	public List<Book> list() {
+		
 		List<Book> bookList = 
-		dbUtil.createEm().createNamedQuery("Book.findAll", Book.class)
+				em.createNamedQuery("Book.findAll", Book.class)
 		  	  .setMaxResults(50)
 		      .getResultList();
-		dbUtil.createEm().close();
 		return bookList;
 	}
 	
@@ -45,7 +50,8 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/categories")
 	public List<String> categories() {
-		List<String> categories =  dbUtil.createEm().createNamedQuery("Book.findAllCategories", String.class)
+		
+		List<String> categories =  em.createNamedQuery("Book.findAllCategories", String.class)
 				  .getResultList();
 		return categories;
 	}
@@ -58,10 +64,10 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/book/{id}")
 	public List<Book> bookDetailById(@PathParam("id") int id) {
-		List<Book> bookList = dbUtil.createEm().createNamedQuery("Book.findById", Book.class)
+		
+		List<Book> bookList = em.createNamedQuery("Book.findById", Book.class)
 		  .setParameter("id", id)
 		  .getResultList();
-		dbUtil.createEm().close();
 		return bookList;
 	}
 	
@@ -73,10 +79,10 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/books/{category}")
 	public List<Book> booksByCategory(@PathParam("category") String category) {
-		List<Book> bookList = dbUtil.createEm().createNamedQuery("Book.findByCategory", Book.class)
+		
+		List<Book> bookList = em.createNamedQuery("Book.findByCategory", Book.class)
 		  .setParameter("category", category)
 		  .getResultList();
-		dbUtil.createEm().close();
 		return bookList;
 	}
 
