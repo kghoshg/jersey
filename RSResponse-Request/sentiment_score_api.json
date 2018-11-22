@@ -1,0 +1,27 @@
+/*
+Sentiment score API end point
+
+https://localhost:8443/bookstore/rest/product_catalogue/recommended_books/bookid
+
+*/
+
+[
+    {
+        "bookid": 132350882,
+        "title": "CLEAN CODE: A HANDBOOK OF AGILE SOFTWARE CRAFTSMANSHIP",
+        "author": "Robert C. Martin",
+        "price": 1599,
+        "category": "Computers",
+        "sentiment_score": 2.00040494
+    },
+    {
+        "bookid": 1118008189,
+        "title": "HTML AND CSS: DESIGN AND BUILD WEBSITES",
+        "author": "Jon Duckett",
+        "price": 1599,
+        "category": "Computers",
+        "sentiment_score": 1.3658698
+    }
+]
+
+

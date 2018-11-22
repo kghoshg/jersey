@@ -21,6 +21,17 @@
 	<named-query name="Book.findByCategory">
         <query>SELECT b FROM Book b WHERE b.category = :category</query>
     </named-query>
+    <named-query name="Book.findRecommnededBooks">
+        <query>SELECT b FROM Book b 
+        	   WHERE sentiment_score 
+			   BETWEEN 
+			   		round((SELECT b.sentiment_score FROM Book b WHERE b.bookid = :id)) - 1 
+			   AND 
+			   		round((SELECT b.sentiment_score FROM Book b WHERE b.bookid = :id)) + 1  
+			   AND
+					category = (SELECT b.category FROM Book b WHERE b.bookid = :id )
+		</query>
+    </named-query>
     
     <!-- ################  User   ################ -->
     <named-query name="User.findByUserNamePassword">

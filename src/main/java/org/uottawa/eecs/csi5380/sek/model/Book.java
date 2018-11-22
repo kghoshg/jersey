@@ -25,6 +25,7 @@ public class Book implements Serializable{
 	private int price; 
 	@Column(name = "category",columnDefinition="ENUM('Biography and Memoir','Business and Finance','Computers', 'Entertainment', 'History', 'Fiction', 'Science Fiction', 'Self-Help', 'Health', 'Science and Nature', 'Poetry')")
 	private String category;
+	private double sentiment_score;
 	
 	///////////////////////getters and setters/////////////////////
 	public int getBookid() {
@@ -58,6 +59,12 @@ public class Book implements Serializable{
 		this.category = category;
 	}
 	
+	public double getSentiment_score() {
+		return sentiment_score;
+	}
+	public void setSentiment_score(double sentiment_score) {
+		this.sentiment_score = sentiment_score;
+	}
 	/////////////////////// Constructors /////////////////////
 	public Book() {
 		
