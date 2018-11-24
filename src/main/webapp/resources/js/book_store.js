@@ -37,14 +37,13 @@ function placeOrder(){
 		    	type: "GET", 
 		    	contentType: "application/json",
 		    	success: function(data){
-		    		
-		    		console.log(data.msg);
+		    	    console.log(data.msg);
 		    	},
 		    	error: function(error){
-		    		console.log("ERRPR", error);
+		    	    console.log("ERRPR", error);
 		    	}
 		    });
-		    		
+		    
 		    switchtoMainPage();
 		}
 		else{
@@ -388,13 +387,17 @@ function signin(userjson){
 	contentType: "application/json",
 	success: function (data){
 	    alert(data.msg);
-	    loggedin=true; //there is now someone logged in
-	    currentuser=data.user_id; //set current user
-	    currentusername = userjson.userName;
-	    console.log(userjson.userName);
-	    $("#login-window").modal('hide'); //get rid of modal pop-up
-	    $("#logged-in-user").html(currentusername); //append logged in user name to div
-	    switchtoAccountOrder();
+
+	    if (data.msg !== "Sign in unsuccessful"){
+		loggedin=true; //there is now someone logged in
+		currentuser=data.user_id; //set current user
+		currentusername = userjson.userName;
+		console.log(userjson.userName);
+		$("#login-window").modal('hide'); //get rid of modal pop-up
+		$("#logged-in-user").html(currentusername); //append logged in user name to div
+		switchtoAccountOrder();
+	    }
+
 	    
 	    
 	},
@@ -491,8 +494,8 @@ function loginClick(){
 }
 
 function createClick(){
-	switchtoCreateAccount();
-	 $("#login-window").modal('hide'); //get rid 
+    switchtoCreateAccount();
+    $("#login-window").modal('hide'); //get rid 
 }
 
 function checkoutClick(){
@@ -538,8 +541,6 @@ function switchtoAccountOrder(){
     showHeader();
     buildAccountOrder();
     showAccountOrder();
-
-    
 }
 
 function showShoppingCart(){
@@ -561,7 +562,8 @@ function showBooks(){
 function showHeader(){
     //copy header template and append to visible page
     $("#screen").append($("#header_template")[0].innerHTML);
-    $("#logged-in-user").html(currentusername); //append logged in user name to div
+
+	$("#logged-in-user").html(currentusername); //append logged in user name to div	
 }
 
 function showAccountCreate(){
