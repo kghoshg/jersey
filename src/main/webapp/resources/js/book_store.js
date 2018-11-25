@@ -7,9 +7,102 @@ var creditcounter = 0; //tracks number of attempted orders
 
 $(document).ready(function(){
 
-    switchtoMainPage(); 	//show header and main page templates
+    //switchtoMainPage(); 	//show header and main page templates
 
+    switchtoShoppingCart();
+
+    $.ajax({
+	url: "/bookstore/rest/product_catalogue/recommended_books/0132350882",
+	type: "GET", 
+	contentType: "application/json",
+	success: function(data){
+	    console.log(data, "data and id to find!!!!!");
+	    //buildRecommended(data, cartlist[y]);
+	},
+	error: function(error){
+	    console.log("ERRPR", error);
+	}
+    }); 
+
+    
 });
+
+
+
+function buildRecommended(data, recsFor, index){
+    console.log("building recommended", data, recsFor, index);
+    var carouselItem = document.createElement("div");
+    
+    carouselItem.className = "carousel-item";
+
+    if (index === "0"){
+	carouselItem.className += " active";
+    }
+
+    var text = document.createElement("p");
+    text.innerHTML = "for " + recsFor.title;
+
+    carouselItem.appendChild(text);
+
+    var row = document.createElement("div");
+    row.className = "row";
+
+    for (x in data){
+
+	var newid = recsFor.id + "_" + data[x].bookid;
+
+	var topdiv = document.createElement("div");
+	topdiv.id = "card_template";
+
+	var card = document.createElement("div");
+	card.className = "card";
+	card.style = "width:12rem;height:14rem";
+
+	var cardbod = document.createElement("div");
+	cardbod.className = "card-body";
+
+	var h5 = document.createElement("h5");
+	h5.className = "card-title text-truncate";
+	h5.innerHTML = data[x].title;
+
+	var auth = document.createElement("p");
+	auth.className = "card-text text-truncate";
+	auth.innerHTML = data[x].author;
+
+	var price = document.createElement("p");
+	price.className = "card-text mt-3";
+	price.innerHTML = "$" + data[x].price;
+
+	var category = document.createElement("p");
+	category.className = "card-text";
+	category.innerHTML = data[x].category;
+
+	var button = document.createElement("a");
+	button.href = "#";
+	button.className = "btn btn-secondary";
+	button.innerHTML = "Add to cart";
+	button.id = "btn_" + data[x].bookid;
+	button.onclick = addToCartClick;
+
+
+	cardbod.appendChild(h5);
+	cardbod.appendChild(auth).appendChild(price).appendChild(category);
+	cardbod.appendChild(button);
+	card.appendChild(cardbod);
+	topdiv.appendChild(card);
+	
+
+	row.appendChild(topdiv);
+
+	//append all cards to row one by one
+	
+	carouselItem.appendChild(row);
+
+    }
+    
+    $("#carousel-append").append(carouselItem);
+    
+}
 
 function placeOrder(){
     //called in response to "Place order" button in account order
@@ -82,11 +175,13 @@ function getCategories(){
 
 function buildShoppingCart(){
     //get all the dynamic shopping cart content and append it to the shopping cart template
+
+    var cartlist = new Array();
     
     $.get("/bookstore/rest/shopping_cart_service/show_cart", function (data){
 	$("#inline").html("");
 
-	for (x in data.all_books){
+	for (let x in data.all_books){
 	    let currentbook = data.all_books[x];
 	    var divGroup = document.createElement("div");
 	    divGroup.id = "shopdiv_" + currentbook.id;
@@ -110,8 +205,27 @@ function buildShoppingCart(){
 
 	    divGroup.appendChild(input);
 
-	    $("#inline").append(divGroup); 
+	    $("#inline").append(divGroup);
+
+	    cartlist.push({id: data.all_books[x].id, title: data.all_books[x].title});
+
 	}
+
+	for (let y in cartlist){
+	    $.ajax({
+		url: "/bookstore/rest/product_catalogue/recommended_books/" + cartlist[y].id,
+		type: "GET", 
+		contentType: "application/json",
+		success: function(data){
+		    console.log("about to build recommended");
+		    buildRecommended(data, cartlist[y], y);
+		},
+		error: function(error){
+		    console.log("ERRPR", error);
+		}
+	    }); 
+	}
+
     });
 }
 
@@ -394,12 +508,9 @@ function signin(userjson){
 		currentusername = userjson.userName;
 		console.log(userjson.userName);
 		$("#login-window").modal('hide'); //get rid of modal pop-up
-		$("#logged-in-user").html(currentusername); //append logged in user name to div
 		switchtoAccountOrder();
 	    }
 
-	    
-	    
 	},
 	error: function(error){
 	    alert(error.msg);
@@ -459,6 +570,7 @@ function addToCartClick(){
     let bookid = this.id.split("_")[1];
 
     $.post("/bookstore/rest/shopping_cart_service/add_2_cart/" + bookid, function (data){
+	//$("#carousel-append").html("");
 	switchtoShoppingCart();
     });
 
@@ -511,11 +623,18 @@ function checkoutClick(){
     } 
 }
 
+function switchtoRecommendations(){
+    wipePage();
+    showHeader();
+    showRecommendations();
+}
+
 function switchtoShoppingCart(){
     //load the html for the shopping cart page
     wipePage();
     showHeader();
     buildShoppingCart();
+    //buildRecommended();
     showShoppingCart();
 }
 
@@ -546,6 +665,9 @@ function switchtoAccountOrder(){
 function showShoppingCart(){
     //append the shopping cart template to the main page area
     $("#screen").append($("#shoppingcart_template")[0].innerHTML);
+    $("#screen").append($("#template_recommendations")[0].innerHTML);
+    console.log($("#template_recommendations")[0].innerHTML, "template recs");
+   
 }
 
 function showAccountOrder(){
@@ -563,7 +685,14 @@ function showHeader(){
     //copy header template and append to visible page
     $("#screen").append($("#header_template")[0].innerHTML);
 
-	$("#logged-in-user").html(currentusername); //append logged in user name to div	
+    if (loggedin){
+	$("#logged-in-user").html(currentusername); //append logged in user name to div
+	//$("#recommendations").show();
+    }
+}
+
+function showRecommendations(){
+    $("#screen").append($("#recommendations_template")[0].innerHTML);
 }
 
 function showAccountCreate(){
