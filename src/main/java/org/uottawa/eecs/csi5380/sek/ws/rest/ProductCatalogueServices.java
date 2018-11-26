@@ -91,6 +91,7 @@ public class ProductCatalogueServices {
 	public List<Book> findRecommendedBooks(@PathParam("id") int id) {
 		List<Book> bookList = em.createNamedQuery("Book.findRecommnededBooks", Book.class)
 				  .setParameter("id", id)
+				  .setMaxResults(5)
 				  .getResultList();
 		return bookList;
 	}
