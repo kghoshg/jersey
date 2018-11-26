@@ -7,12 +7,12 @@ var creditcounter = 0; //tracks number of attempted orders
 
 $(document).ready(function(){
 
-    //switchtoMainPage(); 	//show header and main page templates
+    switchtoMainPage(); 	//show header and main page templates
 
-    switchtoShoppingCart();
+    //switchtoShoppingCart();
 
     $.ajax({
-	url: "/bookstore/rest/product_catalogue/recommended_books/0132350882",
+	url: "/bookstore/rest/product_catalogue/recommended_books/1476795924",
 	type: "GET", 
 	contentType: "application/json",
 	success: function(data){
@@ -50,9 +50,7 @@ function buildRecommended(data, recsFor, index){
     for (x in data){
 
 	var newid = recsFor.id + "_" + data[x].bookid;
-
 	var topdiv = document.createElement("div");
-	//topdiv.id = "card_template";
 
 	var card = document.createElement("div");
 	card.className = "card";
@@ -91,7 +89,6 @@ function buildRecommended(data, recsFor, index){
 	card.appendChild(cardbod);
 	topdiv.appendChild(card);
 	
-
 	row.appendChild(topdiv);
 
 	//append all cards to row one by one
@@ -99,9 +96,7 @@ function buildRecommended(data, recsFor, index){
 	carouselItem.appendChild(row);
 
     }
-    
     $("#carousel-append").append(carouselItem);
-    
 }
 
 function placeOrder(){
@@ -195,9 +190,11 @@ function buildShoppingCart(){
 	    divGroup.appendChild(button);
 
 	    var text = document.createTextNode(currentbook.title);
+	    text.className = "cart-text";
 	    divGroup.appendChild(text);
 
 	    var input = document.createElement("input");
+	    input.className = "numbox";
 	    input.id = "input_" + currentbook.id;
 	    input.type="number";
 	    input.value = currentbook.quantity;

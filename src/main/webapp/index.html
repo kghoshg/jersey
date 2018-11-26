@@ -197,19 +197,7 @@
 	<div id="demo" class="mt-5 ml-3 carousel slide" data-ride="carousel">
 	  <div class="h5 mt-4">Recommendations</div>
 
-	  <ul class="carousel-indicators">
-	    <li data-target="#demo" data-slide-to="0" class="active"></li>
-	    <li data-target="#demo" data-slide-to="1"></li>
-	    <li data-target="#demo" data-slide-to="2"></li>
-	  </ul>
-
-	  
-
-	  <div id="carousel-append" class="carousel-inner" data-ride="carousel">
-	    
-
-
-	  </div>
+	  <div id="carousel-append" class="carousel-inner"></div>
 
 	  <!-- Left and right controls -->
 	  <a class="carousel-control-prev bg-secondary" href="#demo" data-slide="prev">
@@ -223,94 +211,82 @@
       </div>
       <!-- END-->
 
-      <!-- card template -->
+      <!-- HEADER TEMPLATE -->
+      <div id="header_template" style="display:none">
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#" onclick="switchtoMainPage()">Online book store</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+		<a class="nav-link" href="#" onclick="switchtoMainPage()">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+		<a class="nav-link" href="#" onclick="switchtoShoppingCart()">Shopping Cart</a>
+	      </li>
 
-      <div id="card_template" style="display:none">
-	<div class="card" style="width: 12rem;">
-	  <div class="card-body">
-	    <h5 class="card-title">Card title</h5>
-	    <p> class="card-text"</p>
-	       <a href="#" class="btn btn-primary"> Add to cart</a>     
-</div>
-</div>
-</div>
+	      <li class="nav-item">
+		<a id="logged-in-user" href="#" class="nav-link text-success"></a>
+	      </li>
 
-<!-- HEADER TEMPLATE -->
-<div id="header_template" style="display:none">
-  
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#" onclick="switchtoMainPage()">Online book store</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-	<li class="nav-item active">
-	  <a class="nav-link" href="#" onclick="switchtoMainPage()">Home <span class="sr-only">(current)</span></a>
-	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="#" onclick="switchtoShoppingCart()">Shopping Cart</a>
-	</li>
+	      <li class="nav-item" id="recommendations" style="display:none">
+		<a href="#" onclick="switchtoRecommendations" class="nav-link text-info">Recommendations</a>
+	      </li>
 
-	<li class="nav-item">
-	  <a id="logged-in-user" href="#" class="nav-link text-success"></a>
-	</li>
+	      <li class="nav-item">
+		<a class="nav-link" href="#" data-toggle="modal" data-target="#login-window">Login </a>
+	      </li>
+	      <li class="nav-item">
+		<a class="nav-link" href="#" onclick="signout()">Logout </a>
+	      </li>
+	    </ul>
 
-	<li class="nav-item" id="recommendations" style="display:none">
-	  <a href="#" onclick="switchtoRecommendations" class="nav-link text-info">Recommendations</a>
-	</li>
+	  </div>
+	</nav>
 
-	<li class="nav-item">
-	  <a class="nav-link" href="#" data-toggle="modal" data-target="#login-window">Login </a>
-	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="#" onclick="signout()">Logout </a>
-	</li>
-      </ul>
-
-    </div>
-  </nav>
-
-</div>
-
-<!-- MAIN PAGE TEMPLATE -->
-<div id="mainpage_template" style="display:none">
-  
-  <div class="container-fluid h-100">
-    
-    <!-- https://stackoverflow.com/questions/48472771/bootstrap-4-responsive-sidebar-menu-to-top-navbar  -->
-    <div class="container-fluid h-80">
-      <div class="row h-80">
-	<aside class="col-12 col-md-2 p-0 bg-light">
-	  <nav class="navbar navbar-expand navbar-light bg-light flex-md-column flex-row align-items-start">
-	    <div class="collapse navbar-collapse">
-	      <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-		<li class = "nav-item disabled"> <a> Categories </a> </li>
-		<li class = "nav-item" > <a class="nav-link pl-0" href="#" onclick="getAllBooks()"> All </a> </li>
-		<div id = "categories-list"> </div>
-		
-		
-	      </ul>
-	    </div>
-	  </nav>
-	</aside>
-
-	<main class="col">
-
-	  <div class="container-fluid">
-
-	    <div class = "container-fluid">
-	      
-	      <div id="bookitem" class="row">
-
-	      </div>
-
-	    </div>
-	</main>
-	</div>
       </div>
-    </div>
-  </div>
-</body>
+
+      <!-- MAIN PAGE TEMPLATE -->
+      <div id="mainpage_template" style="display:none">
+	
+	<div class="container-fluid h-100">
+	  
+	  <!-- https://stackoverflow.com/questions/48472771/bootstrap-4-responsive-sidebar-menu-to-top-navbar  -->
+	  <div class="container-fluid h-80">
+	    <div class="row h-80">
+	      <aside class="col-12 col-md-2 p-0 bg-light">
+		<nav class="navbar navbar-expand navbar-light bg-light flex-md-column flex-row align-items-start">
+		  <div class="collapse navbar-collapse">
+		    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+		      <li class = "nav-item disabled"> <a> Categories </a> </li>
+		      <li class = "nav-item" > <a class="nav-link pl-0" href="#" onclick="getAllBooks()"> All </a> </li>
+		      <div id = "categories-list"> </div>
+		      
+		      
+		    </ul>
+		  </div>
+		</nav>
+	      </aside>
+
+	      <main class="col">
+
+		<div class="container-fluid">
+
+		  <div class = "container-fluid">
+		    
+		    <div id="bookitem" class="row">
+
+		    </div>
+
+		  </div>
+	      </main>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  </body>
 </html>

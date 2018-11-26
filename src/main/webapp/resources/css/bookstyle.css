@@ -16,3 +16,9 @@ a.carousel-control-next {
     height: 222px;
     top: 73px;
 }
+
+.numbox{
+    width:75px;
+    position:absolute;
+    margin-left:650px;
+}
