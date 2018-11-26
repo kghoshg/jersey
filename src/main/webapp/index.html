@@ -10,7 +10,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="resources/css/bookslist.css">
+    <link rel="stylesheet" href="resources/css/bookstyle.css">
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -197,19 +197,25 @@
 	<div id="demo" class="mt-5 ml-3 carousel slide" data-ride="carousel">
 	  <div class="h5 mt-4">Recommendations</div>
 
+	  <ul class="carousel-indicators">
+	    <li data-target="#demo" data-slide-to="0" class="active"></li>
+	    <li data-target="#demo" data-slide-to="1"></li>
+	    <li data-target="#demo" data-slide-to="2"></li>
+	  </ul>
+
 	  
 
-	  <div id="carousel-append" class="carousel-inner">
+	  <div id="carousel-append" class="carousel-inner" data-ride="carousel">
 	    
 
 
 	  </div>
 
 	  <!-- Left and right controls -->
-	  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+	  <a class="carousel-control-prev bg-secondary" href="#demo" data-slide="prev">
 	    <span class="carousel-control-prev-icon"></span>
 	  </a>
-	  <a class="carousel-control-next" href="#demo" data-slide="next">
+	  <a class="carousel-control-next bg-secondary" href="#demo" data-slide="next">
 	    <span class="carousel-control-next-icon"></span>
 	  </a>
 

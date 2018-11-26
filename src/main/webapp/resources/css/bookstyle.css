@@ -1,0 +1,18 @@
+.carousel-item {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+a.carousel-control-prev {
+    //margin-left: -25px;
+    width: 30px;
+    height: 222px;
+    top: 73px
+}
+
+a.carousel-control-next {
+    //margin-right: -25px;
+    width: 30px;
+    height: 222px;
+    top: 73px;
+}

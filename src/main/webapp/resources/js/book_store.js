@@ -52,7 +52,7 @@ function buildRecommended(data, recsFor, index){
 	var newid = recsFor.id + "_" + data[x].bookid;
 
 	var topdiv = document.createElement("div");
-	topdiv.id = "card_template";
+	//topdiv.id = "card_template";
 
 	var card = document.createElement("div");
 	card.className = "card";
