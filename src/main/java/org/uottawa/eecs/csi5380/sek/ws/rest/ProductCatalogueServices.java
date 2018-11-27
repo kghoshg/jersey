@@ -1,5 +1,6 @@
 package org.uottawa.eecs.csi5380.sek.ws.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -89,11 +90,46 @@ public class ProductCatalogueServices {
 	@GET
 	@Path("/recommended_books/{id}")
 	public List<Book> findRecommendedBooks(@PathParam("id") int id) {
+		
 		List<Book> bookList = em.createNamedQuery("Book.findRecommnededBooks", Book.class)
 				  .setParameter("id", id)
-				  .setMaxResults(5)
 				  .getResultList();
-		return bookList;
+		
+		List<Book> recommendedBooks = new ArrayList<>();
+		
+		int counter = -1;
+		for (Book book : bookList) {
+			counter++;
+			if(book.getBookid() == id) {
+				break;
+			}
+		}
+		
+		if(counter + 1 < bookList.size()) {
+			recommendedBooks.add(bookList.get(counter + 1));
+		}
+		
+		if(counter + 2 < bookList.size()) {
+			recommendedBooks.add(bookList.get(counter + 2));
+		}
+		
+		if(counter + 3 < bookList.size()) {
+			recommendedBooks.add(bookList.get(counter + 3));
+		}
+		
+		if(counter - 1 >= 0) {
+			recommendedBooks.add(bookList.get(counter - 1));
+		}
+		
+		if(counter - 2 >= 0) {
+			recommendedBooks.add(bookList.get(counter - 2));
+		}
+		
+		if(counter - 3 >= 0) {
+			recommendedBooks.add(bookList.get(counter - 3));
+		}
+		
+		return recommendedBooks;
 	}
 
 }
