@@ -1,0 +1,20 @@
+{
+  "name": "book-recommend",
+  "version": "1.0.0",
+  "description": "sentiment analysis on full texts",
+  "main": "index.js",
+  "scripts": {
+      "test": "test",
+      "start": "node index.js"
+  },
+  "keywords": [
+    "sentiment",
+    "books"
+  ],
+  "author": "Eric",
+  "license": "ISC",
+  "dependencies": {
+    "sentiment": "^5.0.1",
+    "server": "^1.0.18"
+  }
+}
